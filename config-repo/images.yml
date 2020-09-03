@@ -1,0 +1,41 @@
+server:
+  port: 8080
+logging:
+  level:
+    org:
+      springframework:
+        cloud: DEBUG
+        integration: DEBUG
+        amqp: DEBUG
+management:
+  security:
+    enabled: false
+  info:
+    git:
+      mode: full
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+spring:
+  devtools:
+    remote:
+      secret: learning-spring-boot
+    restart:
+      enabled: true
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: learning-spring-boot-comments
+          group: learning-spring-boot
+        output:
+          destination: learning-spring-boot-comments
+          group: learning-spring-boot
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

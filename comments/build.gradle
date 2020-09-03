@@ -1,0 +1,82 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.0.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id "com.gorylenko.gradle-git-properties" version "2.2.3"
+}
+
+group = 'insta.spring.gram'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+bootJar {
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation 'org.springframework.metrics:spring-metrics:latest.release'
+        implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+        implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+        implementation('org.springframework.boot:spring-boot-starter-webflux') {
+            exclude group: 'org.springframework.boot',
+                    module: 'spring-boot-starter-reactor-netty'
+        }
+        implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+        implementation 'org.synchronoss.cloud:nio-multipart-parser:1.1.0'
+        implementation 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+        testImplementation 'io.projectreactor:reactor-test'
+        testImplementation "de.flapdoodle.embed:de.flapdoodle.embed.mongo:"
+
+        implementation "org.seleniumhq.selenium:htmlunit-driver"
+        implementation "org.seleniumhq.selenium:selenium-java"
+
+        compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '2.2.4.RELEASE'
+        compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.2.4.RELEASE'
+
+        compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-stream-rabbit', version: '3.0.7.RELEASE'
+        compile group: 'org.springframework.cloud', name: 'spring-cloud-stream-reactive', version: '2.2.1.RELEASE'
+
+        implementation 'com.github.ulisesbocchio:jasypt-spring-boot:3.0.3'
+
+        developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+        compile group: 'org.springframework.cloud', name: 'spring-cloud-stream', version: '3.0.7.RELEASE'
+        compile group: 'org.springframework.cloud', name: 'spring-cloud-stream-reactive', version: '2.2.1.RELEASE'
+
+
+        compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-config', version: '2.2.4.RELEASE'
+
+    }
+    classpath configurations.developmentOnly
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'insta.spring.gram.InstaSpringGramCommentsApplication'
+        )
+
+    }
+}
+
+springBoot {
+    buildInfo()
+}
+
+
